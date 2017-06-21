@@ -1,0 +1,179 @@
+import std.bootstrap
+
+interface Canvas	
+	method setColor(r g b:double)
+	method clear()
+	method drawRectangle(x1 y1 x2 y2:double)
+end
+
+interface ITouchInput
+	method onTouchBegin(touchId:int, x y:double)
+	method onTouchEnd(touchId:int, x y:double)
+	method onTouchMove(touchId:int, oldX oldY:double, newX newY:double)
+	method onTouchCancel(tocuhId:int)
+end
+
+interface IScene
+	method requestTouchListener():ITouchInput
+
+	method acquireCanvas(canvas:Canvas)
+	method update()
+	method render()
+
+	method resize(width height:double)
+end
+
+class Shape
+	field x y:double
+	field r g b:double
+	field sx sy:double
+	field grav:double
+
+
+	constructor (x y:double)
+		construct with
+			x = x
+			y = y
+			r = random()
+			g = random()
+			b = random()
+			sx = (random() - 0.5) * 600
+			sy = (random() - 0.5) * 600
+			grav = 500
+
+		end
+	end
+
+	method draw(canvas:Canvas)
+		canvas.setColor(r, g, b)
+		canvas.drawRectangle(x - 3, y - 3, x + 3, y + 3)
+
+	end
+
+	method applyForce(x y:double, fx fy:double)
+		var dx = this.x - x
+		var dy = this.y - y
+		var dst = sqrt(dx * dx + dy * dy)
+		sx = sx + fx * 100 / (100 + dst) * 7
+		sy = sy + fy * 100 / (100 + dst) * 7
+
+	end
+
+	method update(dt:double, left top right bottom:double)
+		x = x + sx * dt
+		y = y + sy * dt
+		sy = sy + grav * dt
+
+		var bounce = 0.9
+
+		if x < left and sx < 0 then
+			sx = -sx * bounce
+		end
+
+		if y < top and sy < 0 then
+			sy = -sy * bounce
+		end
+
+		if x > right and sx > 0 then
+			sx = -sx * bounce
+		end
+
+		if y > bottom and sy > 0 then
+			sy = -sy * bounce
+		end
+
+	end
+end
+
+class MyScene 
+	implements IScene
+	implements ITouchInput
+
+	field canvas:Canvas?
+
+	field shapes:array.<Shape>
+
+	field width height:double
+
+	constructor()
+		construct with
+			canvas = null
+			shapes = emptyArray()
+			width height = 0
+		end
+	end
+
+	method requestTouchListener():ITouchInput
+		return this
+	end
+
+	method acquireCanvas(canvas:Canvas)
+		print("Canvas acquired!")
+		this.canvas = canvas
+	end
+
+	method update()
+		var i n:int
+		n = shapes.size()
+		i = 0
+		while i < n do
+			shapes.get(i).update(0.02, 0, 0, width, height)
+			i = i + 1
+		end
+	end
+
+	method render()	
+		match canvas with
+		case value canvas then	
+			canvas.clear()
+
+			canvas.setColor(1, 0, 0)
+			canvas.drawRectangle(100, 100, 300, 200)
+			canvas.setColor(0, 0, 1)
+			canvas.drawRectangle(200, 50, 260, 300)
+
+			var i n:int
+			n = shapes.size()
+			i = 0
+			while i < n do
+				shapes.get(i).draw(canvas)
+				i = i + 1
+			end
+
+		end			
+	end
+
+	method resize(width height:double)
+		this.width = width
+		this.height = height
+	end
+
+	method onTouchBegin(touchId:int, x y:double)
+		
+	end
+
+	method onTouchEnd(touchId:int, x y:double)
+
+	end
+
+	method onTouchMove(touchId:int, oldX oldY:double, newX newY:double)
+		var i n:int
+		n = shapes.size()
+		i = 0
+		while i < n do
+			shapes.get(i).applyForce(newX, newY, newX - oldX, newY - oldY)
+			i = i + 1
+		end
+		shapes.push(new Shape(newX, newY))
+	end
+
+	method onTouchCancel(tocuhId:int)
+	end
+end
+
+function stratApplication(scene:IScene) import "_startApplication"
+
+function run()
+	print(fmt(sqrt(5)))
+	StartApplicationScene(new MyScene())
+end

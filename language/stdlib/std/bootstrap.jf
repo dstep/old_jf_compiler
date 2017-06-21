@@ -1,0 +1,3 @@
+function print(val:string) import "_print"
+
+function random():double import "_random"

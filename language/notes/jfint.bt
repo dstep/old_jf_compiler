@@ -1,0 +1,29 @@
+struct QName{
+    uint32 splits;
+    uint32 splitPos[splits+1];
+    char data[splitPos[0]];
+};
+
+struct QNameRefTable{
+    uint32 count;
+    uint32 reference[count];
+};
+
+struct FILE{
+    struct HEADER{ 
+        char magic[4];
+        uint32 offsetQNames;
+        uint32 offsetTypeLists;
+    } header;
+
+    
+} file;
+
+FSeek(file.header.offsetQNames);
+QNameRefTable qnames;
+
+local int i = 0;
+for ( i = 0; i < qnames.count; i++ ){
+    FSeek(qnames.reference[i] + startof(qnames));
+    QName qname;
+}

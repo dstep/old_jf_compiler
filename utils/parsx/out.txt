@@ -1,0 +1,471 @@
+#if defined(parsx_impl)
+const parsx_token_id parsx_token_ids[] = {parsx_invalid_token,
+	parsx_token(pointeropt),
+	parsx_token(direct-abstract-declarator),
+	parsx_token(storage-class-specifier),
+	parsx_token(type-qualifier),
+	parsx_token(*),
+	parsx_token(direct-declarator),
+	parsx_token(function-specifier),
+	parsx_token(type-specifier),
+	parsx_token(declaration-specifiersopt),
+	parsx_token(type-qualifier-listopt),
+};
+const State parsx_state_table[] = {0,
+};
+const size_t parsx_state_translation[] = {
+	0,0,
+};
+parsx_step_func_begin()
+	while( parsx_has_state ){
+		State parsx_current_state_ = parsx_current_state;
+		if ( parsx_current_state_ < 11 ){
+			if ( parsx_lookahead_token == parsx_token_ids[parsx_current_state_] ){
+				parsx_queue_action(parsx_current_state_);
+				parsx_pop_state();
+				parsx_shift_token();
+				return true;
+			}else{
+				return false;
+			}
+		}else if ( parsx_current_state_ < 20 ){
+			parsx_pop_state();
+			parsx_queue_action(parsx_current_state_);
+		}else{
+			Action parsx_applied_rule;
+			switch ( parsx_current_state_ ){
+			}
+			parsx_queue_action(parsx_applied_rule);
+			parsx_pop_state();
+			const size_t* parsx_indicies = &parsx_state_translation[parsx_applied_rule * 2];
+			const State* parsx_states = &parsx_state_table[parsx_indicies[0]];
+			size_t parsx_push_count = parsx_indicies[1];
+			while ( parsx_push_count-- ) parsx_push_state(parsx_states[parsx_push_count]);
+		}
+	}
+parsx_step_func_end()
+
+
+parsx_commit_func_begin()
+	while ( parsx_has_queued_action ){
+		Action parsx_action = parsx_pop_queued_action;
+		if ( parsx_action < 11 ){
+			parsx_commit_token(<null>)
+			return true;
+		} else if ( parsx_action < 20 ){
+			switch ( parsx_action ){
+			case 11:{ //action ((<null>, <null>, <null>))=>{}
+				;
+			}break;
+			case 12:{ //action ((<null>, <null>))=>{}
+				;
+			}break;
+			case 13:{ //action ((<null>, <null>))=>{}
+				;
+			}break;
+			case 14:{ //action ((<null>, <null>))=>{}
+				;
+			}break;
+			case 15:{ //action ((<null>, <null>))=>{}
+				;
+			}break;
+			case 16:{ //action ((<null>, <null>))=>{}
+				;
+			}break;
+			case 17:{ //action ((<null>, <null>))=>{}
+				;
+			}break;
+			case 18:{ //action ((<null>, <null>))=>{}
+				;
+			}break;
+			case 19:{ //action (())=>{}
+				;
+			}break;
+		}
+	}
+}
+return false;
+parsx_commit_func_end()
+
+
+parsx_undo_func_begin()
+	while ( parsx_has_queued_action ){
+		Action parsx_action = parsx_pop_last_queued_action;
+		if ( parsx_action < 11 ){
+			parsx_unshift_token();
+			parsx_push_state(parsx_action);
+		} else if ( parsx_action < 20 ){
+			parsx_push_state(parsx_action);
+		} else {
+			const size_t* parsx_indicies = &parsx_state_translation[parsx_action * 2];
+			size_t parsx_pop_count = parsx_indicies[1];
+			while ( parsx_pop_count-- ) parsx_pop_state();
+			parsx_push_state(parsx_state_table[parsx_indicies[0] - 1]);
+		}
+	}
+parsx_undo_func_end()
+
+
+parsx_sync_mask_table_begin()
+	parsx_sync_mask(0)
+	parsx_sync_mask(1, parsx_token(pointeropt))
+	parsx_sync_mask(1, parsx_token(direct-abstract-declarator))
+	parsx_sync_mask(1, parsx_token(storage-class-specifier))
+	parsx_sync_mask(1, parsx_token(type-qualifier))
+	parsx_sync_mask(1, parsx_token(*))
+	parsx_sync_mask(1, parsx_token(direct-declarator))
+	parsx_sync_mask(1, parsx_token(function-specifier))
+	parsx_sync_mask(1, parsx_token(type-specifier))
+	parsx_sync_mask(1, parsx_token(declaration-specifiersopt))
+	parsx_sync_mask(1, parsx_token(type-qualifier-listopt))
+	parsx_sync_mask(0)
+	parsx_sync_mask(0)
+	parsx_sync_mask(0)
+	parsx_sync_mask(0)
+	parsx_sync_mask(0)
+	parsx_sync_mask(0)
+	parsx_sync_mask(0)
+	parsx_sync_mask(0)
+	parsx_sync_mask(0)
+parsx_sync_mask_table_end()
+
+
+parsx_sync_cost_func_begin()
+	switch ( parsx_sync_state ){
+		case 1:{
+			switch ( parsx_sync_token ){
+				case parsx_token(pointeropt):{return 0;}break;
+				default:{return 1;}break;
+			}
+		}break;
+		case 2:{
+			switch ( parsx_sync_token ){
+				case parsx_token(direct-abstract-declarator):{return 0;}break;
+				default:{return 1;}break;
+			}
+		}break;
+		case 3:{
+			switch ( parsx_sync_token ){
+				case parsx_token(storage-class-specifier):{return 0;}break;
+				default:{return 1;}break;
+			}
+		}break;
+		case 4:{
+			switch ( parsx_sync_token ){
+				case parsx_token(type-qualifier):{return 0;}break;
+				default:{return 1;}break;
+			}
+		}break;
+		case 5:{
+			switch ( parsx_sync_token ){
+				case parsx_token(*):{return 0;}break;
+				default:{return 1;}break;
+			}
+		}break;
+		case 6:{
+			switch ( parsx_sync_token ){
+				case parsx_token(direct-declarator):{return 0;}break;
+				default:{return 1;}break;
+			}
+		}break;
+		case 7:{
+			switch ( parsx_sync_token ){
+				case parsx_token(function-specifier):{return 0;}break;
+				default:{return 1;}break;
+			}
+		}break;
+		case 8:{
+			switch ( parsx_sync_token ){
+				case parsx_token(type-specifier):{return 0;}break;
+				default:{return 1;}break;
+			}
+		}break;
+		case 9:{
+			switch ( parsx_sync_token ){
+				case parsx_token(declaration-specifiersopt):{return 0;}break;
+				default:{return 1;}break;
+			}
+		}break;
+		case 10:{
+			switch ( parsx_sync_token ){
+				case parsx_token(type-qualifier-listopt):{return 0;}break;
+				default:{return 1;}break;
+			}
+		}break;
+		case 11:{
+			switch ( parsx_sync_token ){
+				default:{return 0;}break;
+			}
+		}break;
+		case 12:{
+			switch ( parsx_sync_token ){
+				default:{return 0;}break;
+			}
+		}break;
+		case 13:{
+			switch ( parsx_sync_token ){
+				default:{return 0;}break;
+			}
+		}break;
+		case 14:{
+			switch ( parsx_sync_token ){
+				default:{return 0;}break;
+			}
+		}break;
+		case 15:{
+			switch ( parsx_sync_token ){
+				default:{return 0;}break;
+			}
+		}break;
+		case 16:{
+			switch ( parsx_sync_token ){
+				default:{return 0;}break;
+			}
+		}break;
+		case 17:{
+			switch ( parsx_sync_token ){
+				default:{return 0;}break;
+			}
+		}break;
+		case 18:{
+			switch ( parsx_sync_token ){
+				default:{return 0;}break;
+			}
+		}break;
+		case 19:{
+			switch ( parsx_sync_token ){
+				default:{return 0;}break;
+			}
+		}break;
+	}
+parsx_sync_cost_func_end()
+
+
+parsx_sync_func_begin()
+	switch ( parsx_current_state ){
+		case 1:{
+			switch ( parsx_lookahead_token ){
+				case parsx_token(pointeropt):{
+					parsx_pop_state();
+					parsx_push_state(1);
+				}break;
+				default:{
+					parsx_pop_state();
+					parsx_insert_token(pointeropt);
+					parsx_queue_action(1);
+				}break;
+			}
+		}break;
+		case 2:{
+			switch ( parsx_lookahead_token ){
+				case parsx_token(direct-abstract-declarator):{
+					parsx_pop_state();
+					parsx_push_state(2);
+				}break;
+				default:{
+					parsx_pop_state();
+					parsx_insert_token(direct-abstract-declarator);
+					parsx_queue_action(2);
+				}break;
+			}
+		}break;
+		case 3:{
+			switch ( parsx_lookahead_token ){
+				case parsx_token(storage-class-specifier):{
+					parsx_pop_state();
+					parsx_push_state(3);
+				}break;
+				default:{
+					parsx_pop_state();
+					parsx_insert_token(storage-class-specifier);
+					parsx_queue_action(3);
+				}break;
+			}
+		}break;
+		case 4:{
+			switch ( parsx_lookahead_token ){
+				case parsx_token(type-qualifier):{
+					parsx_pop_state();
+					parsx_push_state(4);
+				}break;
+				default:{
+					parsx_pop_state();
+					parsx_insert_token(type-qualifier);
+					parsx_queue_action(4);
+				}break;
+			}
+		}break;
+		case 5:{
+			switch ( parsx_lookahead_token ){
+				case parsx_token(*):{
+					parsx_pop_state();
+					parsx_push_state(5);
+				}break;
+				default:{
+					parsx_pop_state();
+					parsx_insert_token(*);
+					parsx_queue_action(5);
+				}break;
+			}
+		}break;
+		case 6:{
+			switch ( parsx_lookahead_token ){
+				case parsx_token(direct-declarator):{
+					parsx_pop_state();
+					parsx_push_state(6);
+				}break;
+				default:{
+					parsx_pop_state();
+					parsx_insert_token(direct-declarator);
+					parsx_queue_action(6);
+				}break;
+			}
+		}break;
+		case 7:{
+			switch ( parsx_lookahead_token ){
+				case parsx_token(function-specifier):{
+					parsx_pop_state();
+					parsx_push_state(7);
+				}break;
+				default:{
+					parsx_pop_state();
+					parsx_insert_token(function-specifier);
+					parsx_queue_action(7);
+				}break;
+			}
+		}break;
+		case 8:{
+			switch ( parsx_lookahead_token ){
+				case parsx_token(type-specifier):{
+					parsx_pop_state();
+					parsx_push_state(8);
+				}break;
+				default:{
+					parsx_pop_state();
+					parsx_insert_token(type-specifier);
+					parsx_queue_action(8);
+				}break;
+			}
+		}break;
+		case 9:{
+			switch ( parsx_lookahead_token ){
+				case parsx_token(declaration-specifiersopt):{
+					parsx_pop_state();
+					parsx_push_state(9);
+				}break;
+				default:{
+					parsx_pop_state();
+					parsx_insert_token(declaration-specifiersopt);
+					parsx_queue_action(9);
+				}break;
+			}
+		}break;
+		case 10:{
+			switch ( parsx_lookahead_token ){
+				case parsx_token(type-qualifier-listopt):{
+					parsx_pop_state();
+					parsx_push_state(10);
+				}break;
+				default:{
+					parsx_pop_state();
+					parsx_insert_token(type-qualifier-listopt);
+					parsx_queue_action(10);
+				}break;
+			}
+		}break;
+		case 11:{
+			switch ( parsx_lookahead_token ){
+				default:{
+					parsx_pop_state();
+					parsx_queue_action(11);
+				}break;
+			}
+		}break;
+		case 12:{
+			switch ( parsx_lookahead_token ){
+				default:{
+					parsx_pop_state();
+					parsx_queue_action(12);
+				}break;
+			}
+		}break;
+		case 13:{
+			switch ( parsx_lookahead_token ){
+				default:{
+					parsx_pop_state();
+					parsx_queue_action(13);
+				}break;
+			}
+		}break;
+		case 14:{
+			switch ( parsx_lookahead_token ){
+				default:{
+					parsx_pop_state();
+					parsx_queue_action(14);
+				}break;
+			}
+		}break;
+		case 15:{
+			switch ( parsx_lookahead_token ){
+				default:{
+					parsx_pop_state();
+					parsx_queue_action(15);
+				}break;
+			}
+		}break;
+		case 16:{
+			switch ( parsx_lookahead_token ){
+				default:{
+					parsx_pop_state();
+					parsx_queue_action(16);
+				}break;
+			}
+		}break;
+		case 17:{
+			switch ( parsx_lookahead_token ){
+				default:{
+					parsx_pop_state();
+					parsx_queue_action(17);
+				}break;
+			}
+		}break;
+		case 18:{
+			switch ( parsx_lookahead_token ){
+				default:{
+					parsx_pop_state();
+					parsx_queue_action(18);
+				}break;
+			}
+		}break;
+		case 19:{
+			switch ( parsx_lookahead_token ){
+				default:{
+					parsx_pop_state();
+					parsx_queue_action(19);
+				}break;
+			}
+		}break;
+	}
+parsx_sync_func_end()
+
+
+size_t parsx_expect_translation[] = {
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+};
+size_t parsx_expect_translation_n[] = {
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+};
+parsx_expect_type parsx_expect_table[] = {
+parsx_expect_token(pointeropt),parsx_expect_token(direct-abstract-declarator),parsx_expect_token(storage-class-specifier),parsx_expect_token(type-qualifier),parsx_expect_token(*),parsx_expect_token(direct-declarator),parsx_expect_token(function-specifier),parsx_expect_token(type-specifier),parsx_expect_token(declaration-specifiersopt),parsx_expect_token(type-qualifier-listopt),
+};
+parsx_expected_func_begin()
+	State parsx_expect_state_ = parsx_expect_state;
+	if ( parsx_expect_state_ < 11 ){
+		parsx_expect(parsx_expect_table[parsx_expect_state_ - 1]);
+	} else if ( parsx_expect_state_ >= 20 ){
+		parsx_expect_type* expect_id = &parsx_expect_table[parsx_expect_translation[parsx_expect_state_]];
+		size_t parsx_n_expects = parsx_expect_translation_n[parsx_expect_state_];
+		while ( parsx_n_expects-- ){ parsx_expect(*expect_id); expect_id++; }
+	}
+parsx_expected_func_end()
+#endif

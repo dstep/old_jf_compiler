@@ -1,0 +1,70 @@
+
+interface VertexBuffer
+	method upload(firstVertex:int, vertexCount:int, data:bytes)
+end
+
+interface IndexBuffer
+	method upload(firstIndex:int, indexCount:int, data:bytes)
+end
+
+enum VertexStreamFormat
+	Float4
+	Float3
+	Float2
+	Bytes4
+end
+
+interface Shader
+	method upload(source:string)
+	method compile():string?
+	method isCompleted():bool
+end
+
+interface FragmentShader
+	extends Shader
+end
+
+interface VertexShader
+	extends Shader
+end
+
+interface Program
+	method link():string?
+	method isCompleted():bool
+	
+	method getVertexStreamIndex(name:string):int?
+	method getSamplerIndex(name:string):int?
+	method getConstantIndex(name:string):int?
+end
+
+interface Texture
+	method upload(data:bytes)
+	method uploadRegion(x y:int, width height:int, data:bytes)
+end
+
+enum TextureFormat
+	RGBA8
+end
+
+interface Context3D
+	method setClearColor(r g b a:double)
+	method setClearDepth(depth:double)
+	method setClearStencil(stencil:int)
+	method clear(color:bool, depth:bool, stencil:bool)
+	
+	method createVertexBuffer(static:bool, bytesPerVertex:int, vertexCount:int):VertexBuffer
+	method createIndexBuffer(static:bool, indexCount:int):IndexBuffer
+	method createVertexShader():VertexShader
+	method createFragmentShader():FragmentShader
+	method createProgram(VertexShader, FragmentShader):Program
+	method createTexture(TextureFormat, width height:int):Texture
+	
+	method setVertexStream(index:int, vertexBuffer:VertexBuffer, VertexStreamFormat, bufferOffset:int)
+	method unsetVertexStream(index:int)
+	method setSampler(index:int, Texture)
+	method unsetSampler(index:int)
+	method setProgramConstant(index:int, x y z w:double)
+	
+	method setProgram(Program)
+	method drawTriangles(indexBuffer:IndexBuffer, firstIndex:int, trianglesCount:int)
+end

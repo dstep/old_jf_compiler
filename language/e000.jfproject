@@ -1,0 +1,4 @@
+source stdlib
+source example
+intermediate tmp
+main e001.run

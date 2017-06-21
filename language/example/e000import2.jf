@@ -1,0 +1,19 @@
+
+class Color
+	field x:double
+end
+
+
+function openFile():File|OpenError
+
+function getPoint():{double,double}
+
+
+struct LargeData
+	field content:int[10]
+	field someOtherInfo:double
+end
+
+function byRef(data:LargeData)
+
+

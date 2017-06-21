@@ -1,0 +1,13 @@
+digraph {
+	"(int|double)" [label="(int|double)" fillcolor=gold1 style=filled]
+	c [label="c(numeric)<=[numeric]" fillcolor=pink style=filled]
+	int [label=int fillcolor=turquoise style=filled]
+	numeric [label=numeric fillcolor=turquoise style=filled]
+	a [label=a fillcolor=pink style=filled]
+	double [label=double fillcolor=turquoise style=filled]
+	b [label="b(int)<=[int]" fillcolor=pink style=filled]
+		int -> b [label=id fontsize=7]
+		c -> "(int|double)" [color=red]
+		b -> "(int|double)" [label="id-and-pack-0" fontsize=7]
+		numeric -> c [label=id fontsize=7]
+}

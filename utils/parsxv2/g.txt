@@ -1,0 +1,222 @@
+types:
+	Module : Module*
+	Import : Import*
+	Imports : List<Import>
+	TopLevels : List<TopLevel>
+	TopLevel : TopLevel*
+	QualID : QualID*
+	SrcMarker : SrcLoc
+	ImportAs : StringRef
+	FunctionSignature : FunctionSignature*
+	FunctionBody : FunctionBody*
+	Names : List<Name>
+	ParamGroups : List<ParamGroup>
+	ParamGroup : ParamGroup*
+	ElseExpr Expr : Expr*
+	ExprList1 ExprList : List<ExprList>
+	TypeUnion TypeList TypeList2 : List<TypeList>
+	TypeReference : WithSrcLoc<TypeReferenceNode*>
+	Type : Type*
+	Stmt : Stmt*
+	Stmts : List<Stmt>
+	{{ }} : <null>
+	
+Module :
+	Imports TopLevels EndOfFile => alloc(Module)($1)
+
+TopLevels :
+	TopLevels TopLevel => $1.append($2)
+	<e> => List<TopLevel>()
+	
+TopLevel :
+	function identifier FunctionSignature {{FunctionBody}} => alloc(GlobalFunction)($2.where, sym($2), $3, $4)
+	global Names TypeBinding {{Initializer}} => alloc(GlobalVariable)($2, $3, $4)
+
+TypeBinding :
+	colon Type => $2
+
+Initializer :
+	= Expr => $2
+
+TypeList :
+	TypeList' 
+	<e> => List<TypeList>()
+
+TypeList' :
+	TypeList' , Type => $1.append(alloc(TypeList)($3))
+	Type => alloc(TypeList)($1)
+
+TypeList2 :
+	TypeList2 , Type => $1.append(alloc(TypeList)($3))
+	Type , Type => List<TypeList>(alloc(TypeList)($1)).append(alloc(TypeList)($3))
+ 
+Type :
+	type(0)
+
+Expr :
+	expr(0)
+	 
+type(prec) :
+	prec == 0  | TypeUnion => alloc(TypeUnion)(SrcSpan($1.first->type->where.from(), $1.last->type->where.to()), $1)
+	prec == 7  | type(prec) ? => alloc(TypeOptional)(SrcSpan($1->where.from(), $2.where.to()), $1)
+	prec == 5  | type(prec+1) arrow type(prec) => alloc(TypeFunction)(SrcSpan($1->where, $3->where), $1, $3)
+	prec == 10 | TypePrim
+	prec == 10 | ( TypeList ) => alloc(TypeSoftTuple)(SrcSpan($1.where, $3.where), $2)
+	prec < 10  | type(prec+1)
+
+TypeUnion :
+	TypeUnion vbar type(1) => $1.append(alloc(TypeList)($3))
+	type(1) vbar type(1) => List<TypeList>(alloc(TypeList)($1)).append(alloc(TypeList)($3))
+
+TypePrim :
+	unit => alloc(TypePrim)($1.where, TypePrim::Unit)
+	undef => alloc(TypePrim)($1.where, TypePrim::Undef)
+	bool => alloc(TypePrim)($1.where, TypePrim::Bool)
+	int => alloc(TypePrim)($1.where, TypePrim::Int)
+	float => alloc(TypePrim)($1.where, TypePrim::Float)
+	double => alloc(TypePrim)($1.where, TypePrim::Double)
+	string => alloc(TypePrim)($1.where, TypePrim::String)
+	bytes => alloc(TypePrim)($1.where, TypePrim::Bytes)
+	TypeReference => alloc(TypeReference)(to_here($1), $1)
+	{ TypeList } => alloc(TypeTuple)(SrcSpan($1.where.from(), $3.where.to()), $2)
+
+TypeReference :
+	TypeReference . identifier => WithSrcLoc<TypeReferenceNode*>($1, alloc(TypeReferenceSubscript)($1, sym($3)))
+	TypeReference . < TypeList > => WithSrcLoc<TypeReferenceNode*>($1, alloc(TypeReferenceInstance)($1, $4))
+	TypeReference . <> => WithSrcLoc<TypeReferenceNode*>($1, alloc(TypeReferenceInstance)($1, List<TypeList>()))
+	identifier => WithSrcLoc<TypeReferenceNode*>($1.where.from(), alloc(TypeReferenceLeaf)(sym($1)))
+
+expr(prec) :
+	prec == 0          | expr(prec) colon Type => alloc(ExprCoerce)(SrcSpan($1->where, $3->where), $1, $3)
+	prec == 0          | expr(prec) or expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::Or, $1, $3)
+	prec == 1          | expr(prec) and expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::And, $1, $3)
+	prec == 2          | not expr(2) => alloc(ExprUnOp)(SrcSpan($1.where.from(), $2->where.to()), ExprUnOp::Not, $2)
+	prec == 2          | expr(prec+1) == expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::EQ, $1, $3)
+	prec == 2          | expr(prec+1) <> expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::NE, $1, $3)
+	prec == 2          | expr(prec+1) <= expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::LE, $1, $3)
+	prec == 2          | expr(prec+1) >= expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::GE, $1, $3)
+	prec == 2          | expr(prec+1) < expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::LT, $1, $3)
+	prec == 2          | expr(prec+1) > expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::GT, $1, $3)
+	prec == 3          | expr(prec) + expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::Plus, $1, $3)
+	prec == 3          | expr(prec) - expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::Minus, $1, $3)
+	prec == 4          | expr(prec) * expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::Mult, $1, $3)
+	prec == 4          | expr(prec) / expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::Div, $1, $3)
+	prec == 4          | expr(prec) % expr(prec+1) => alloc(ExprBinOp)(SrcSpan($1->where.from(), $3->where.to()), ExprBinOp::Rem, $1, $3)
+	prec == 8          | expr(prec) ( ExprList ) => alloc(ExprCall)(SrcSpan($2.where, $4.where), $1, $3)
+	prec == 6     | - expr(6) => alloc(ExprUnOp)(SrcSpan($1.where.from(), $2->where.to()), ExprUnOp::Negate, $2)
+	prec == 10  | if Expr then Expr ElseExpr => alloc(ExprIf)($1.where, $2, $4, $5)
+	prec == 10         | ExprPrim
+	prec == 10         | expr(10) . identifier => alloc(ExprSubscript)(SrcSpan($2.where, $3.where), $1, sym($3))
+	prec == 10         | expr(10) . < TypeList > => alloc(ExprInstance)(SrcSpan($2.where, $5.where), $1, $4)
+	prec == 10   | ( Expr ) => $2
+	prec < 10          | expr(prec+1)
+	 
+ElseExpr :
+	else Expr end => $2
+	elseif Expr then Expr ElseExpr => alloc(ExprIf)($1.where, $2, $4, $5)
+
+ExprPrim :
+	unit => alloc(ExprUnit)($1.where)
+	true => alloc(ExprTrue)($1.where)
+	false => alloc(ExprFalse)($1.where)
+	null => alloc(ExprNull)($1.where)
+	"string" => alloc(ExprString)($1.where, lit($1))
+	number => alloc(ExprNumber)($1.where, sym($1))
+	identifier => alloc(ExprID)($1.where, sym($1))
+
+ExprList :
+	<e> => List<ExprList>()
+	ExprList' => $1
+
+ExprList' :
+	ExprList , Expr => $1.append(alloc(ExprList)($3))
+	Expr => alloc(ExprList)($1)
+
+ExprList1 :
+	ExprList1 , expr(0) => $1.append(alloc(ExprList)($3))
+	expr(0) => alloc(ExprList)($1)
+
+Names :
+	Names identifier => $1.append(alloc(Name)($2.where, sym($2)))
+	identifier => alloc(Name)($1.where, sym($1))
+
+FunctionSignature :
+	( ParamGroups ) MTypeBinder => alloc(FunctionSignature)(to_here($1.where.from()), $2, $4)
+
+ParamGroups :
+	<e> => nullptr
+	ParamGroups' => $1
+
+ParamGroups' :
+	ParamGroups' , ParamGroup => $1.append($3)
+	ParamGroup => List<ParamGroup>($1)
+
+ParamGroup :
+	Names colon Type => alloc(ParamGroup)($1, $3)
+	Type => alloc(ParamGroup)(nullptr, $1)
+
+MTypeBinder :
+	<e> => nullptr
+	colon Type => $2
+
+MInitializer :
+	<e> => nullptr
+	Initializer
+
+FunctionBody :
+	import "string" => alloc(FunctionBodyImport)($2.where, lit($2))
+	SrcMarker Stmts end => alloc(FunctionBodyDefined)(to_here($1), $2)
+
+Stmts :
+	Stmts' => $1
+	<e> => List<Stmt>()
+
+Stmts' :
+	Stmts' Stmt => $1.append($2)
+	Stmts' ; => $1
+	Stmt => List<Stmt>($1)
+
+Stmt :
+	Expr => alloc(StmtEval)($1->where, StmtEval::Naked, $1)
+	ExprList1 = ExprList1 => alloc(StmtAssign)(SrcSpan($1.first->expr->where, $3.last->expr->where), $1, $3)
+	if Expr then Stmts ElseStmt => alloc(StmtIf)($1.where, $2, $4, $5)
+	while Expr do Stmts end => alloc(StmtWhile)($1.where, $2, $4)
+	for Names in Expr do Stmts end => alloc(StmtFor)($1.where, $2, $4, $6)
+	var Names Initializer => alloc(StmtVar)($1.where, $2, nullptr, $3)
+	var Names colon Type MInitializer => alloc(StmtVar)($1.where, $2, $4, $5)
+	var Names ; => alloc(StmtVar)($1.where, $2, nullptr, nullptr)
+
+ElseStmt :
+	end => nullptr
+	else Stmts end => $2
+	elseif Expr then Stmts ElseStmt => alloc(StmtIf)($1.where, $2, $4, $5)
+
+Imports :
+	Imports Import => $1.append($2)
+	<e> => List<Import>()
+
+Import :
+	SrcMarker import QualID ImportAs => alloc(Import)(to_here($1), $3, $4)
+
+ImportAs :
+	as identifier => sym($2)
+	<e> => StringRef()
+
+QualID :
+	identifier => alloc(QualID)($1.where, sym($1))
+	QualID . identifier => alloc(QualID)(jf::SrcSpan($1->where.from(), $3.where.to()), $1, sym($3))
+
+SrcMarker :
+	=> parsx_next_shifted.where.from()
+	 
+{{ :
+	=> use_def
+
+}} :
+	=> use_decl
+
+{{FunctionBody}} :
+	{{ FunctionBody }} => $2
+
+{{Initializer}} :
+	{{ Initializer }} => $2

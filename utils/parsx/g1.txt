@@ -1,0 +1,26 @@
+tokens:
+	+ PLUS
+	* MULT
+	( LPAREN
+	) RPAREN
+	
+types:
+	tokens : Token
+	S : double	
+
+S :
+	es EndOfFile => $1
+es: 
+	EVAL e => $2
+	es EVAL e => $3
+e:
+	e + t => add($1, $3)
+	t
+t:
+	t * p => mult($1, $3)
+	p
+p:
+	numseq
+	( e ) => $2
+numseq :
+	NUM => num($1)

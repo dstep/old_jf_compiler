@@ -1,0 +1,19 @@
+#if !defined(SETTINGS_ERROR)
+#error define SETTINGS_ERROR first
+#endif
+
+SETTINGS_ERROR(UnterminatedString)
+SETTINGS_ERROR(InvalidEscapeSequence)
+SETTINGS_ERROR(MalformedInputString)
+SETTINGS_ERROR(UndefinedCommand)
+SETTINGS_ERROR(NoSourceGiven)
+SETTINGS_ERROR(MultipleIntermediatePaths)
+SETTINGS_ERROR(IntermediatePathNotGiven)
+SETTINGS_ERROR(MultipleMainFunctions)
+SETTINGS_ERROR(MainFunctionNotGiven)
+SETTINGS_ERROR(MainMustBeQualified)
+SETTINGS_ERROR(ArchiveTargetNotGiven)
+SETTINGS_ERROR(ArchiveSourceNotGiven)
+SETTINGS_ERROR(ExtraCharactersAfterQualID)
+
+#undef SETTINGS_ERROR

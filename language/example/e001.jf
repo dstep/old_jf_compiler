@@ -1,0 +1,116 @@
+import app.Scene
+import graphics.Context
+import std.bootstrap
+
+class Resources
+	field vbo:VertexBuffer
+	field ibo:IndexBuffer
+	
+	constructor (context:Context3D)
+		var vbo = context.createVertexBuffer(true, 2 * 4, 4)
+		
+		var vbodata = allocateBytes(2 * 4 * 4)
+		
+		vbodata.writeFloat(0, -0.5)
+		vbodata.writeFloat(4, -0.5)
+		
+		vbodata.writeFloat(8, -0.5)
+		vbodata.writeFloat(12, 0.5)
+		
+		vbodata.writeFloat(16, 0.5)
+		vbodata.writeFloat(20, 0.5)
+		
+		vbodata.writeFloat(24, 0.5)
+		vbodata.writeFloat(28, -0.5)
+		
+		vbo.upload(0, 4, vbodata)
+		
+		var ibo = context.createIndexBuffer(true, 6)
+
+		var ibodata = allocateBytes(2 * 6)
+		ibodata.writeU16(0, 0)
+		ibodata.writeU16(1, 1)
+		ibodata.writeU16(2, 2)
+		
+		ibodata.writeU16(3, 2)
+		ibodata.writeU16(4, 1)
+		ibodata.writeU16(5, 3)
+		
+		ibo.upload(0, 6, ibodata)
+		
+		construct with
+			vbo = vbo
+			ibo = ibo
+		end
+	end
+end
+
+
+class MyScene 
+	implements IScene
+	implements ITouchListener
+	
+	field context:Context3D?
+	field resources:Resources?
+	
+	field color:double
+	field colorPhase:int
+	
+	constructor()
+		construct with
+			context = null
+			resources = null
+			color = 0
+			colorPhase = 1
+		end		
+	end
+	
+	method onTouchBoundToMouse(touchIndex:int)
+	end
+	
+	method onTouchBegin(touchIndex:int, x y:double)
+	end
+	
+	method onTouchEnd(touchIndex:int, x y:double)
+	end
+	
+	method onTouchMove(touchIndex:int, oldX oldY:double, newX newY:double)
+	end
+	
+	method onTouchCancel(touchIndex:int)
+	end
+	
+	method onTouchPassiveMove(touchIndex:int, oldX oldY:double, newX newY:double)
+	end
+
+	method acquireContext(context:Context3D)
+		this.context = context
+		this.resources = new Resources(context)
+	end
+	
+	method requestTouchListener():ITouchListener
+		return this
+	end
+	
+	method update()
+		color = color + 0.01 * colorPhase
+		if color > 1 and colorPhase > 0 then
+			colorPhase = -colorPhase
+		elseif color < 0 and colorPhase < 0 then
+			colorPhase = -colorPhase
+		end
+	end
+	
+	method render()	
+		match context, resources with
+		case value context, value resources then
+			context.setClearColor(0, 0.25, color, 0)
+			context.clear(true, true, true)
+		end
+	end
+end
+
+function run()
+	StartApplicationScene(new MyScene())
+end
+

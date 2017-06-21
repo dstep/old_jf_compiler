@@ -1,0 +1,286 @@
+#include <Parser/LexerImpl.h>
+
+using namespace jf::parser;
+
+#define LEXX_CONSUME_UNEXPECTED lexer->countUnexpected(lexem_start, lexem_length)
+#define LEXX_USERPARAM jf::parser::Lexer* lexer,
+
+#define KWD(t) lexer->countKeyword(Token::K##t, sizeof(#t) - 1);
+#define OP(t) lexer->countKeyword(Token::O##t, lexem_length);
+============
+COMMENT
+STRING_LITERAL
+STRING_LITERAL_GLUE
+============
+unit 
+	KWD(Unit)
+undef
+	KWD(Undef)
+bool
+	KWD(Bool)
+int
+	KWD(Int)
+float
+	KWD(Float)
+double
+	KWD(Double)
+string
+	KWD(String)
+bytes
+	KWD(Bytes)
+
+import 
+	KWD(Import)
+function
+	KWD(Function)
+global
+	KWD(Global)
+struct
+	KWD(Struct)
+interface
+	KWD(Interface)
+class
+	KWD(Class)
+enum
+	KWD(Enum)
+method
+	KWD(Method)
+extends
+	KWD(Extends)
+implements
+	KWD(Implements)
+override
+	KWD(Override)
+abstract
+	KWD(Abstract)
+constructor
+	KWD(Constructor)
+with
+	KWD(With)
+as
+	KWD(As)
+end
+	KWD(End)
+not
+	KWD(Not)
+field
+	KWD(Field)
+var
+	KWD(Var)
+let
+	KWD(Let)
+until
+	KWD(Until)
+for
+	KWD(For)
+in
+	KWD(In)
+case
+	KWD(Case)
+match
+	KWD(Match)
+return
+	KWD(Return)
+eval
+	KWD(Eval)
+if
+	KWD(If)
+else
+	KWD(Else)
+elseif
+	KWD(ElseIf)
+while
+	KWD(While)
+construct
+	KWD(Construct)
+then
+	KWD(Then)
+do
+	KWD(Do)
+true
+	KWD(True)
+false
+	KWD(False)
+null
+	KWD(Null)
+and
+	KWD(And)
+new
+	KWD(New)
+or
+	KWD(Or)
+raise
+	KWD(Raise)
+lambda
+	KWD(Lambda)
+repeat
+	KWD(Repeat)
+
+[(]
+	OP(LParen)
+[?]
+	OP(Question)
+[)]
+	OP(RParen)
+\[
+	OP(LBracket)
+\]
+	OP(RBracket)
+[{]
+	OP(LBrace)
+[}]
+	OP(RBrace)
+:
+	OP(Colon)
+[.]
+	OP(Period)
+`
+	OP(Quote)
+->
+	OP(Arrow)
+[,]
+	OP(Comma)
+[=]
+	OP(Assign)
+;
+	OP(Semicolon)
+
+[<]
+	OP(LT)
+[>]
+	OP(GT)
+[<]=
+	OP(LE)
+[>]=
+	OP(GE)
+==
+	OP(EQ)
+[<]>
+	OP(NE)
+
+=[>]
+	OP(BigArrow)
+
+[+]
+	OP(Plus)
+[\-]
+	OP(Minus)
+[*]
+	OP(Mult)
+[/]
+	OP(Div)
+[%]
+	OP(Rem)
+
+[|]
+	OP(VBar)
+
+[.][.]
+	OP(Concat)
+
+0
+[1-9][0-9]*
+	lexer->countAndCopyASCII(Token::NumberLiteral, lexem_start, lexem_length);
+
+(0|[1-9][0-9]*)[.][0-9]+([eE][+\-]?[0-9]+)?
+	lexer->countAndCopyASCII(Token::NumberLiteral, lexem_start, lexem_length);
+
+[a-zA-Z][a-zA-Z0-9_]*
+	lexer->countAndCopyASCII(Token::Identifier, lexem_start, lexem_length);
+
+[ \t]+
+	lexer->countChars(lexem_length);
+
+--[^\n\r]*
+	;
+
+[{]-
+	lexer->countChars(2);
+	LEXX_GOTO(COMMENT);
+	 
+\r
+\n\r
+\r\n
+	lexer->countNewline();
+
+"
+	lexer->beginBuffer();
+	lexer->countChars(1);
+	LEXX_GOTO(STRING_LITERAL);
+
+<STRING_LITERAL>"
+	lexer->countChars(1);
+	LEXX_GOTO(STRING_LITERAL_GLUE);
+
+<STRING_LITERAL>[^\\"]+
+	lexer->bufferCodepoints(lexem_start, lexem_length);
+
+<STRING_LITERAL>\\"
+	lexer->countChars(2);
+	lexer->bufferUTF8('"');
+<STRING_LITERAL>\\\\
+	lexer->countChars(2);
+	lexer->bufferUTF8('\\');
+<STRING_LITERAL>\\n
+	lexer->countChars(2);
+	lexer->bufferUTF8('\n');
+<STRING_LITERAL>\\r
+	lexer->countChars(2);
+	lexer->bufferUTF8('\r');
+<STRING_LITERAL>\\t
+	lexer->countChars(2);
+	lexer->bufferUTF8('\t');
+<STRING_LITERAL>\\x[0-9a-fA-F][0-9a-fA-F]
+	lexer->countChars(4);
+	lexer->bufferUTF8FromHex(lexem_start + 2, 2);
+<STRING_LITERAL>\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]
+	lexer->countChars(6);
+	lexer->bufferUTF8FromHex(lexem_start + 2, 4);
+<STRING_LITERAL>\\U[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]
+	lexer->countChars(10);
+	lexer->bufferUTF8FromHex(lexem_start + 2, 8);
+
+<STRING_LITERAL_GLUE>[ \t]+
+	lexer->countChars(lexem_length);
+<STRING_LITERAL_GLUE>\r
+<STRING_LITERAL_GLUE>\n\r
+<STRING_LITERAL_GLUE>\r\n
+	lexer->countNewline();
+
+<STRING_LITERAL_GLUE>"
+	lexer->countChars(1);
+	LEXX_GOTO(STRING_LITERAL);
+
+<STRING_LITERAL_GLUE>.
+	lexer->endBuffer(Token::StringLiteral);
+	LEXX_UNPUT(1);
+	LEXX_GOTO(INITIAL);
+
+<STRING_LITERAL><EOF>
+	lexer->reportHere(LexerError::UnterminatedStringLiteral);
+	lexer->endBuffer(Token::StringLiteral);
+
+<STRING_LITERAL_GLUE><EOF>
+	lexer->endBuffer(Token::StringLiteral);
+
+<COMMENT>([^\-])+
+	lexer->countCodepoints(lexem_start, lexem_length);
+
+<COMMENT>-
+	lexer->countChars(1);
+	 
+<COMMENT>-[}]
+	lexer->countChars(2);
+	LEXX_GOTO(INITIAL);
+
+<COMMENT><EOF>
+	lexer->reportHere(LexerError::UnterminatedComment);
+
+[\x80-\xff]+
+	LEXX_CONSUME_UNEXPECTED;
+
+[0-9]+([.]?[0-9]*([eE]?[+\-]?[0-9]*)?)
+	LEXX_CONSUME_UNEXPECTED;
+
+[a-zA-Z0-9_]+
+	LEXX_CONSUME_UNEXPECTED;

@@ -1,0 +1,398 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AFA95A1B-73CE-4E9A-86F3-9F568EE9D93C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>jellyfish</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(VC_INT)\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(VC_INT)\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(VC_INT)\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(VC_INT)\$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../jfruntime/include;../libconnect/include;include;$(LLVM_SRC)/include;$(LLVM_ROOT)/build-$(Platform)-trunk/include</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)/%(RelativeDir)/</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <XMLDocumentationFileName>$(IntDir)/%(RelativeDir)/</XMLDocumentationFileName>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4244;4800;4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>jfruntime.lib;libconnect.lib;LLVMAnalysis.lib;LLVMARMAsmParser.lib;LLVMARMAsmPrinter.lib;LLVMARMCodeGen.lib;LLVMARMDesc.lib;LLVMARMDisassembler.lib;LLVMARMInfo.lib;LLVMAsmParser.lib;LLVMAsmPrinter.lib;LLVMBitReader.lib;LLVMBitWriter.lib;LLVMCodeGen.lib;LLVMCore.lib;LLVMDebugInfo.lib;LLVMExecutionEngine.lib;LLVMInstCombine.lib;LLVMInstrumentation.lib;LLVMInterpreter.lib;LLVMipa.lib;LLVMipo.lib;LLVMIRReader.lib;LLVMLineEditor.lib;LLVMLinker.lib;LLVMLTO.lib;LLVMMC.lib;LLVMMCDisassembler.lib;LLVMMCJIT.lib;LLVMMCParser.lib;LLVMObjCARCOpts.lib;LLVMObject.lib;LLVMOption.lib;LLVMProfileData.lib;LLVMRuntimeDyld.lib;LLVMScalarOpts.lib;LLVMSelectionDAG.lib;LLVMSupport.lib;LLVMTableGen.lib;LLVMTarget.lib;LLVMTransformUtils.lib;LLVMVectorize.lib;LLVMX86AsmParser.lib;LLVMX86AsmPrinter.lib;LLVMX86CodeGen.lib;LLVMX86Desc.lib;LLVMX86Disassembler.lib;LLVMX86Info.lib;LLVMX86Utils.lib;Shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(LLVM_ROOT)/build-$(Platform)-trunk/Debug/lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../jfruntime/include;../libconnect/include;include;$(LLVM_SRC)/include;$(LLVM_ROOT)/build-$(Platform)-trunk/include</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)/%(RelativeDir)/</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <XMLDocumentationFileName>$(IntDir)/%(RelativeDir)/</XMLDocumentationFileName>
+      <DisableSpecificWarnings>4267;4244;4800;4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>jfruntime.lib;libconnect.lib;LLVMAnalysis.lib;LLVMARMAsmParser.lib;LLVMARMAsmPrinter.lib;LLVMARMCodeGen.lib;LLVMARMDesc.lib;LLVMARMDisassembler.lib;LLVMARMInfo.lib;LLVMAsmParser.lib;LLVMAsmPrinter.lib;LLVMBitReader.lib;LLVMBitWriter.lib;LLVMCodeGen.lib;LLVMCore.lib;LLVMDebugInfo.lib;LLVMExecutionEngine.lib;LLVMInstCombine.lib;LLVMInstrumentation.lib;LLVMInterpreter.lib;LLVMipa.lib;LLVMipo.lib;LLVMIRReader.lib;LLVMLineEditor.lib;LLVMLinker.lib;LLVMLTO.lib;LLVMMC.lib;LLVMMCDisassembler.lib;LLVMMCJIT.lib;LLVMMCParser.lib;LLVMObjCARCOpts.lib;LLVMObject.lib;LLVMOption.lib;LLVMProfileData.lib;LLVMRuntimeDyld.lib;LLVMScalarOpts.lib;LLVMSelectionDAG.lib;LLVMSupport.lib;LLVMTableGen.lib;LLVMTarget.lib;LLVMTransformUtils.lib;LLVMVectorize.lib;LLVMX86AsmParser.lib;LLVMX86AsmPrinter.lib;LLVMX86CodeGen.lib;LLVMX86Desc.lib;LLVMX86Disassembler.lib;LLVMX86Info.lib;LLVMX86Utils.lib;Shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(LLVM_ROOT)/build-$(Platform)-trunk/Debug/lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../jfruntime/include;../libconnect/include;include;$(LLVM_SRC)/include;$(LLVM_ROOT)/build-$(Platform)-trunk/include</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)/%(RelativeDir)/</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <DisableSpecificWarnings>4267;4244;4800;4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>jfruntime.lib;libconnect.lib;LLVMAnalysis.lib;LLVMARMAsmParser.lib;LLVMARMAsmPrinter.lib;LLVMARMCodeGen.lib;LLVMARMDesc.lib;LLVMARMDisassembler.lib;LLVMARMInfo.lib;LLVMAsmParser.lib;LLVMAsmPrinter.lib;LLVMBitReader.lib;LLVMBitWriter.lib;LLVMCodeGen.lib;LLVMCore.lib;LLVMDebugInfo.lib;LLVMExecutionEngine.lib;LLVMInstCombine.lib;LLVMInstrumentation.lib;LLVMInterpreter.lib;LLVMipa.lib;LLVMipo.lib;LLVMIRReader.lib;LLVMLineEditor.lib;LLVMLinker.lib;LLVMLTO.lib;LLVMMC.lib;LLVMMCDisassembler.lib;LLVMMCJIT.lib;LLVMMCParser.lib;LLVMObjCARCOpts.lib;LLVMObject.lib;LLVMOption.lib;LLVMProfileData.lib;LLVMRuntimeDyld.lib;LLVMScalarOpts.lib;LLVMSelectionDAG.lib;LLVMSupport.lib;LLVMTableGen.lib;LLVMTarget.lib;LLVMTransformUtils.lib;LLVMVectorize.lib;LLVMX86AsmParser.lib;LLVMX86AsmPrinter.lib;LLVMX86CodeGen.lib;LLVMX86Desc.lib;LLVMX86Disassembler.lib;LLVMX86Info.lib;LLVMX86Utils.lib;Shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(LLVM_ROOT)/build-$(Platform)-trunk/RelWithDebInfo/lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../jfruntime/include;../libconnect/include;include;$(LLVM_SRC)/include;$(LLVM_ROOT)/build-$(Platform)-trunk/include</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)/%(RelativeDir)/</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <DisableSpecificWarnings>4267;4244;4800;4996</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>jfruntime.lib;libconnect.lib;LLVMAnalysis.lib;LLVMARMAsmParser.lib;LLVMARMAsmPrinter.lib;LLVMARMCodeGen.lib;LLVMARMDesc.lib;LLVMARMDisassembler.lib;LLVMARMInfo.lib;LLVMAsmParser.lib;LLVMAsmPrinter.lib;LLVMBitReader.lib;LLVMBitWriter.lib;LLVMCodeGen.lib;LLVMCore.lib;LLVMDebugInfo.lib;LLVMExecutionEngine.lib;LLVMInstCombine.lib;LLVMInstrumentation.lib;LLVMInterpreter.lib;LLVMipa.lib;LLVMipo.lib;LLVMIRReader.lib;LLVMLineEditor.lib;LLVMLinker.lib;LLVMLTO.lib;LLVMMC.lib;LLVMMCDisassembler.lib;LLVMMCJIT.lib;LLVMMCParser.lib;LLVMObjCARCOpts.lib;LLVMObject.lib;LLVMOption.lib;LLVMProfileData.lib;LLVMRuntimeDyld.lib;LLVMScalarOpts.lib;LLVMSelectionDAG.lib;LLVMSupport.lib;LLVMTableGen.lib;LLVMTarget.lib;LLVMTransformUtils.lib;LLVMVectorize.lib;LLVMX86AsmParser.lib;LLVMX86AsmPrinter.lib;LLVMX86CodeGen.lib;LLVMX86Desc.lib;LLVMX86Disassembler.lib;LLVMX86Info.lib;LLVMX86Utils.lib;Shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(LLVM_ROOT)/build-$(Platform)-trunk/RelWithDebInfo/lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Backend\LLVM\ClassLayout.cpp" />
+    <ClCompile Include="src\Backend\LLVM\CompilationTarget.cpp" />
+    <ClCompile Include="src\Backend\LLVM\FunctionCompiler.cpp" />
+    <ClCompile Include="src\Backend\LLVM\InterfaceLayout.cpp" />
+    <ClCompile Include="src\Backend\LLVM\JIT\JITEngine.cpp" />
+    <ClCompile Include="src\Backend\LLVM\LLVMBackend.cpp" />
+    <ClCompile Include="src\Backend\LLVM\LLVMCompileTarget.cpp" />
+    <ClCompile Include="src\Backend\LLVM\LLVMContext.cpp" />
+    <ClCompile Include="src\Backend\LLVM\LLVMModule.cpp" />
+    <ClCompile Include="src\Backend\LLVM\LLVMModuleInfo.cpp" />
+    <ClCompile Include="src\Backend\LLVM\ModuleArchive.cpp" />
+    <ClCompile Include="src\IR\Class.cpp" />
+    <ClCompile Include="src\IR\Compiler\InstrCompiler.cpp" />
+    <ClCompile Include="src\IR\Compiler\InstrCompilerTypes.cpp" />
+    <ClCompile Include="src\IR\Compiler\LayoutBuilder.cpp" />
+    <ClCompile Include="src\IR\Compiler\LexicalScope.cpp" />
+    <ClCompile Include="src\IR\Compiler\MatchTreeCompiler.cpp" />
+    <ClCompile Include="src\IR\Compiler\ModuleInstrCompiler.cpp" />
+    <ClCompile Include="src\IR\Compiler\NameResolver.cpp" />
+    <ClCompile Include="src\IR\Compiler\PrepareDataflow.cpp" />
+    <ClCompile Include="src\IR\Export.cpp" />
+    <ClCompile Include="src\IR\ImportBloomFilter.cpp" />
+    <ClCompile Include="src\IR\Compiler\IRBuilder.cpp" />
+    <ClCompile Include="src\IR\Instr\Builtin.cpp" />
+    <ClCompile Include="src\IR\Instr\Coercion.cpp" />
+    <ClCompile Include="src\IR\Instr\Compare.cpp" />
+    <ClCompile Include="src\IR\Instr\FunctionFrame.cpp" />
+    <ClCompile Include="src\IR\Instr\Instr.cpp" />
+    <ClCompile Include="src\IR\Instr\Type.cpp" />
+    <ClCompile Include="src\IR\Interface.cpp" />
+    <ClCompile Include="src\lexx\lexer.cpp" />
+    <ClCompile Include="src\Parser\LexerError.cpp" />
+    <ClCompile Include="src\Parser\ParserError.cpp" />
+    <ClCompile Include="src\Parser\RunLexer.cpp" />
+    <ClCompile Include="src\Parser\RunParser.cpp" />
+    <ClCompile Include="src\Parser\Token.cpp" />
+    <ClCompile Include="src\parsx\parser_compile.cpp">
+      <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</WholeProgramOptimization>
+      <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</WholeProgramOptimization>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">None</DebugInformationFormat>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Size</FavorSizeOrSpeed>
+      <BufferSecurityCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</BufferSecurityCheck>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|x64'">None</DebugInformationFormat>
+      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Size</FavorSizeOrSpeed>
+      <BufferSecurityCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</BufferSecurityCheck>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</BasicRuntimeChecks>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="src\Pipeline\ModuleContext.cpp" />
+    <ClCompile Include="src\Pipeline\ModuleContextJob.cpp" />
+    <ClCompile Include="src\Support\Format.cpp" />
+    <ClCompile Include="src\Support\QualID.cpp" />
+    <ClCompile Include="src\Support\Localization.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Pipeline\Pipeline.cpp" />
+    <ClCompile Include="src\Support\Diagnostic.cpp" />
+    <ClCompile Include="src\Support\File\FileSystem.cpp" />
+    <ClCompile Include="src\Support\Platform\Windows.cpp" />
+    <ClCompile Include="src\Support\ProjectSettingsParser.cpp" />
+    <ClCompile Include="src\Support\Memory.cpp" />
+    <ClCompile Include="src\Support\MemoryAPI.cpp" />
+    <ClCompile Include="src\Support\MemoryPool.cpp" />
+    <ClCompile Include="src\Support\SafeMath.cpp" />
+    <ClCompile Include="src\Support\SourceLoc.cpp" />
+    <ClCompile Include="src\Support\Threading\Atomic.cpp" />
+    <ClCompile Include="src\Support\Threading\Dataflow.cpp" />
+    <ClCompile Include="src\Support\Threading\Monitor.cpp" />
+    <ClCompile Include="src\Support\Threading\Mutex.cpp" />
+    <ClCompile Include="src\Support\Threading\SpinLock.cpp" />
+    <ClCompile Include="src\Support\Threading\Thread.cpp" />
+    <ClCompile Include="src\Support\Threading\ThreadLocal.cpp" />
+    <ClCompile Include="src\Support\Threading\ThreadPool.cpp" />
+    <ClCompile Include="src\Support\Twine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Backend\Backend.h" />
+    <ClInclude Include="include\Backend\BackendModuleInfo.h" />
+    <ClInclude Include="include\Backend\LLVM\ClassLayout.h" />
+    <ClInclude Include="include\Backend\LLVM\Common.h" />
+    <ClInclude Include="include\Backend\LLVM\FunctionCompiler.h" />
+    <ClInclude Include="include\Backend\LLVM\CompilationTarget.h" />
+    <ClInclude Include="include\Backend\LLVM\InterfaceLayout.h" />
+    <ClInclude Include="include\Backend\LLVM\JIT\JITEngine.h" />
+    <ClInclude Include="include\Backend\LLVM\LLVMBackend.h" />
+    <ClInclude Include="include\Backend\LLVM\LLVMCompileTarget.h" />
+    <ClInclude Include="include\Backend\LLVM\LLVMContext.h" />
+    <ClInclude Include="include\Backend\LLVM\LLVMModule.h" />
+    <ClInclude Include="include\Backend\LLVM\LLVMModuleInfo.h" />
+    <ClInclude Include="include\Backend\LLVM\ModuleArchive.h" />
+    <ClInclude Include="include\IR\Compiler\CompilerValue.h" />
+    <ClInclude Include="include\IR\Compiler\ControlFlow.h" />
+    <ClInclude Include="include\IR\Compiler\LexicalScope.h" />
+    <ClInclude Include="include\IR\Compiler\MatchTree.h" />
+    <ClInclude Include="include\IR\Compiler\MatchTreeCompiler.h" />
+    <ClInclude Include="include\IR\Instr\BasicBlock.h" />
+    <ClInclude Include="include\IR\Instr\Builtin.h" />
+    <ClInclude Include="include\IR\Instr\Coercion.h" />
+    <ClInclude Include="include\IR\Instr\Compare.h" />
+    <ClInclude Include="include\IR\Instr\FunctionFrame.h" />
+    <ClInclude Include="include\IR\Compiler\InstrCompiler.h" />
+    <ClInclude Include="include\IR\Compiler\InstrCompilerCommon.h" />
+    <ClInclude Include="include\IR\Compiler\LayoutBuilder.h" />
+    <ClInclude Include="include\IR\Compiler\ModuleInstrCompiler.h" />
+    <ClInclude Include="include\IR\Compiler\NameResolver.h" />
+    <ClInclude Include="include\IR\Compiler\PrepareDataflow.h" />
+    <ClInclude Include="include\IR\ImportBloomFilter.h" />
+    <ClInclude Include="include\IR\Instr\Instr.h" />
+    <ClInclude Include="include\IR\Instr\Type.h" />
+    <ClInclude Include="include\Pipeline\ModuleExportTableCallback.h" />
+    <ClInclude Include="include\Support\Container\BloomFilter.h" />
+    <ClInclude Include="include\Support\Container\CascadeBloomFilter.h" />
+    <ClInclude Include="include\IR\Class.h" />
+    <ClInclude Include="include\IR\Definition.h" />
+    <ClInclude Include="include\IR\Enum.h" />
+    <ClInclude Include="include\IR\Export.h" />
+    <ClInclude Include="include\IR\FunctionSignature.h" />
+    <ClInclude Include="include\IR\GlobalFunction.h" />
+    <ClInclude Include="include\IR\GlobalVariable.h" />
+    <ClInclude Include="include\IR\Import.h" />
+    <ClInclude Include="include\IR\Interface.h" />
+    <ClInclude Include="include\IR\Compiler\IRBuilder.h" />
+    <ClInclude Include="include\IR\Module.h" />
+    <ClInclude Include="include\IR\NamedObject.h" />
+    <ClInclude Include="include\IR\Struct.h" />
+    <ClInclude Include="include\IR\Type.h" />
+    <ClInclude Include="include\Parser\AST\AST.h" />
+    <ClInclude Include="include\Parser\AST\Common.h" />
+    <ClInclude Include="include\Parser\AST\Expr.h" />
+    <ClInclude Include="include\Parser\AST\Function.h" />
+    <ClInclude Include="include\Parser\AST\Module.h" />
+    <ClInclude Include="include\Parser\AST\Pattern.h" />
+    <ClInclude Include="include\Parser\AST\Stmt.h" />
+    <ClInclude Include="include\Parser\AST\Type.h" />
+    <ClInclude Include="include\Parser\LexerImpl.h" />
+    <ClInclude Include="include\Parser\ParserError.h" />
+    <ClInclude Include="include\Parser\RunLexer.h" />
+    <ClInclude Include="include\Parser\LexerError.h" />
+    <ClInclude Include="include\Parser\RunParser.h" />
+    <ClInclude Include="include\Parser\Token.h" />
+    <ClInclude Include="include\Pipeline\Archive.h" />
+    <ClInclude Include="include\Pipeline\ModuleContext.h" />
+    <ClInclude Include="include\Pipeline\ModuleContextJob.h" />
+    <ClInclude Include="include\Pipeline\ModuleObject.h" />
+    <ClInclude Include="include\Pipeline\ModuleSource.h" />
+    <ClInclude Include="include\Pipeline\Pipeline.h" />
+    <ClInclude Include="include\Pipeline\ProjectSettings.h" />
+    <ClInclude Include="include\Pipeline\ProjectSettingsParser.h" />
+    <ClInclude Include="include\Pipeline\Target.h" />
+    <ClInclude Include="include\Support\ArrayRef.h" />
+    <ClInclude Include="include\Support\BuildSettings.h" />
+    <ClInclude Include="include\Support\Container\ArrayList.h" />
+    <ClInclude Include="include\Support\Container\CappedArray.h" />
+    <ClInclude Include="include\Support\Container\HashMap.h" />
+    <ClInclude Include="include\Support\Container\SearchTree.h" />
+    <ClInclude Include="include\Support\Format.h" />
+    <ClInclude Include="include\Support\Threading\Dataflow.h" />
+    <ClInclude Include="include\Support\Diagnostic.h" />
+    <ClInclude Include="include\Support\File\FileSystem.h" />
+    <ClInclude Include="include\Support\Hash.h" />
+    <ClInclude Include="include\Support\IntrusiveList.h" />
+    <ClInclude Include="include\Support\Localization.h" />
+    <ClInclude Include="include\Support\Macros.h" />
+    <ClInclude Include="include\Support\Match.h" />
+    <ClInclude Include="include\Support\Memory.h" />
+    <ClInclude Include="include\Support\MemoryAPI.h" />
+    <ClInclude Include="include\Support\MemoryPool.h" />
+    <ClInclude Include="include\Support\Obligation.h" />
+    <ClInclude Include="include\Support\Ordering.h" />
+    <ClInclude Include="include\Support\Pair.h" />
+    <ClInclude Include="include\Support\Platform\Windows.h" />
+    <ClInclude Include="include\Support\SafeMath.h" />
+    <ClInclude Include="include\Support\SourceLoc.h" />
+    <ClInclude Include="include\Support\String\ParseQualID.h" />
+    <ClInclude Include="include\Support\QualID.h" />
+    <ClInclude Include="include\Support\StringRef.h" />
+    <ClInclude Include="include\Support\String\ParseString.h" />
+    <ClInclude Include="include\Support\Threading\Atomic.h" />
+    <ClInclude Include="include\Support\Threading\Monitor.h" />
+    <ClInclude Include="include\Support\Threading\Mutex.h" />
+    <ClInclude Include="include\Support\Threading\SpinLock.h" />
+    <ClInclude Include="include\Support\Threading\Thread.h" />
+    <ClInclude Include="include\Support\Threading\ThreadLocal.h" />
+    <ClInclude Include="include\Support\Threading\ThreadPool.h" />
+    <ClInclude Include="include\Support\Twine.h" />
+    <ClInclude Include="include\Support\Types.h" />
+    <ClInclude Include="src\parsx\parser_config.h" />
+    <ClInclude Include="src\parsx\parsx_declare_parser.h" />
+    <ClInclude Include="src\parsx\parsx_parser.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\IR\Instr\PrimCompare.inc" />
+    <None Include="include\IR\Instr\PrimTypes.inc" />
+    <None Include="include\Parser\LexerErrors.inc" />
+    <None Include="include\Parser\ParserErrors.inc" />
+    <None Include="include\Parser\TokenTypes.inc" />
+    <None Include="include\Pipeline\ProjectSettingsParseErrors.inc" />
+    <CustomBuild Include="src\lexx\lexer.lexx">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\%(RelativeDir)\genlexx.bat</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\%(RelativeDir)\lexer.cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\%(RelativeDir)\genlexx.bat</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\%(RelativeDir)\lexer.cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\%(RelativeDir)\genlexx.bat</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\%(RelativeDir)\lexer.cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\%(RelativeDir)\genlexx.bat</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\%(RelativeDir)\lexer.cpp</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="src\parsx\parser.parsx">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\%(RelativeDir)\genparsx.bat</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\%(RelativeDir)\genparsx.bat</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\%(RelativeDir)\genparsx.bat</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\%(RelativeDir)\genparsx.bat</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\%(RelativeDir)\parser_core.cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\%(RelativeDir)\parser_core.cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\%(RelativeDir)\parser_core.cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\%(RelativeDir)\parser_core.cpp</Outputs>
+    </CustomBuild>
+    <None Include="src\localization.inc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

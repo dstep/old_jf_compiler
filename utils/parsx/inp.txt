@@ -1,0 +1,31 @@
+tokens:
+	
+
+parameter-declaration:
+	declaration-specifiers declarator
+	declaration-specifiers abstract-declaratoropt
+	
+abstract-declaratoropt:
+	abstract-declarator
+	<e>
+
+declaration-specifiers:
+	storage-class-specifier declaration-specifiersopt
+	type-specifier declaration-specifiersopt
+	type-qualifier declaration-specifiersopt
+	function-specifier declaration-specifiersopt
+	
+declarator:
+	pointeropt direct-declarator
+	
+abstract-declarator:
+	pointer
+	pointeropt direct-abstract-declarator
+	
+pointer:
+	* type-qualifier-listopt
+	* type-qualifier-listopt pointer
+	
+type-qualifier-list:
+	type-qualifier
+	type-qualifier-list type-qualifier

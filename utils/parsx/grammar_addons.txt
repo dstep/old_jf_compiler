@@ -1,0 +1,3 @@
+	prec == 5  | ( ) arrow type(prec) => alloc(TypeFunction)(SrcSpan($1.where.from(), $4->where.to()), List<TypeList>(), $4)
+	prec == 5  | ( TypeList2 ) arrow type(prec) => alloc(TypeFunction)(SrcSpan($1.where.from(), $5->where.to()), $2, $5)
+	prec == 5  | type(prec+1) arrow type(prec) => alloc(TypeFunction)(SrcSpan($1->where.from(), $3->where.to()), alloc(TypeList)($1), $3)

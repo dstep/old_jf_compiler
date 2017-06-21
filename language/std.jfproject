@@ -1,0 +1,3 @@
+source stdlib
+intermediate tmp
+archive stdlib/std.jflib std.* 

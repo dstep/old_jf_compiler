@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Object Files">
+      <UniqueIdentifier>{ca4d7d7a-2b8c-49a8-b399-609a5bb764ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JF Sources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="JF Sources\example">
+      <UniqueIdentifier>{7fb7c743-cbf9-4d94-8901-07534740812b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JF Sources\std">
+      <UniqueIdentifier>{dc545c36-d2da-494f-abc0-2b53ff6218b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JF Sources\std\bootstrap">
+      <UniqueIdentifier>{ad6480b4-0eac-4034-b629-5476a9c13a27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JF Sources\project">
+      <UniqueIdentifier>{3ce7db23-69da-4ccc-8fde-2d9dbf1a16e6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="..\language\tmp\e000.obj">
+      <Filter>Object Files</Filter>
+    </Object>
+    <Object Include="..\language\tmp\std.bootstrap.obj">
+      <Filter>Object Files</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\language\example\e000.jf">
+      <Filter>JF Sources\example</Filter>
+    </None>
+    <None Include="..\language\example\e000import.jf">
+      <Filter>JF Sources\example</Filter>
+    </None>
+    <None Include="..\language\example\e000import2.jf">
+      <Filter>JF Sources\example</Filter>
+    </None>
+    <None Include="..\language\stdlib\std\bootstrap.jf">
+      <Filter>JF Sources\std</Filter>
+    </None>
+    <None Include="..\language\stdlib\std\bootstrap\Q.jf">
+      <Filter>JF Sources\std\bootstrap</Filter>
+    </None>
+    <None Include="..\language\example\e001.jf">
+      <Filter>JF Sources\example</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\language\e000.jfproject">
+      <Filter>JF Sources\project</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\language\e000.jfproject" />
+  </ItemGroup>
+</Project>

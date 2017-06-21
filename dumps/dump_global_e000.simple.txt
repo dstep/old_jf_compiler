@@ -1,0 +1,23 @@
+label_1:
+	1 <- param t
+	2 <- param x
+	3 <- param y
+	4 <- param z
+	5 <- param f
+	6 <- const_int 1
+	7 <- writelocal s, 6
+	8 <- br label_2
+label_2:
+	9 <- readlocal s
+	11 <- const_int 5
+	12 <- compare numeric, <, 9, 11
+	13 <- condbr 12, label_4, label_3
+label_3:
+	14 <- const_float 7
+	15 <- return 14
+label_4:
+	16 <- readlocal s
+	18 <- const_int 1
+	19 <- callbuiltin plus-int, 16, 18
+	21 <- writelocal s, 19
+	22 <- br label_2

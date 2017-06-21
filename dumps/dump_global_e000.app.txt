@@ -1,0 +1,12 @@
+label_1:
+	1 <- callenumcons Transparent
+	2 <- writelocal t, 1
+	3 <- const_double 2
+	4 <- const_double 3
+	5 <- const_double 4
+	6 <- callenumcons RGB, 3, 4, 5
+	7 <- writelocal a, 6
+	8 <- readlocal a
+	9 <- readlocal t
+	10 <- compare enum, ==, 8, 9
+	11 <- return 10

@@ -1,0 +1,21 @@
+import graphics.Context
+
+interface ITouchListener
+	method onTouchBoundToMouse(touchIndex:int)
+	method onTouchBegin(touchIndex:int, x y:double)
+	method onTouchEnd(touchIndex:int, x y:double)
+	method onTouchMove(touchIndex:int, oldX oldY:double, newX newY:double)
+	method onTouchCancel(touchIndex:int)
+	method onTouchPassiveMove(touchIndex:int, oldX oldY:double, newX newY:double)
+end
+
+
+interface IScene
+	method acquireContext(context:Context3D)
+	method requestTouchListener():ITouchListener
+	method update()
+	method render()	
+end
+
+
+function StartApplicationScene(scene:IScene) import "_StartApplicationScene"
